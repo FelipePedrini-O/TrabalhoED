@@ -1,5 +1,4 @@
 #include "leitor.h"
-#include "lista.h"
 
 struct leitor{
     int id;
