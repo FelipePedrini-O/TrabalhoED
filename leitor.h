@@ -3,6 +3,7 @@
 
 #include "lista.h"
 #include "livro.h"
+#include "listaLivros.h"
 
 typedef struct leitor tLeitor;
 

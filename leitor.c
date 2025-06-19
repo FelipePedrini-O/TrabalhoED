@@ -33,10 +33,10 @@ void liberaLeitor(void* leitor){
     if(l != NULL){
         free(l->nome);
 
-        liberaLista(l->recomendacoes);
+        liberaListaLivro(l->recomendacoes);
         liberaLista(l->afinidades);
-        liberaLista(l->desejados);
-        liberaLista(l->lidos);
+        liberaListaLivro(l->desejados);
+        liberaListaLivro(l->lidos);
         
         free(l);
         l = NULL;

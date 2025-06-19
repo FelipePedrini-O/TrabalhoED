@@ -1,11 +1,9 @@
-#include "lista.h"
+#include "listaLivros.h"
 
 typedef struct node{
     tLivro* livro;
     struct node* prox;
     struct node* ant;
-
-    libera libera_item;
 }tNode;
 
 struct listaLivro{
@@ -36,7 +34,7 @@ static tNode* buscaLivroLista(tListaLivro* l, char* key){
     return NULL;
 }
 
-void insereLivro(tLista* l, tLivro* livro){
+void insereLivro(tListaLivro* l, tLivro* livro){
     if(buscaLivroLista(l, retornaNomeLivro(livro)) != NULL){
         printf("Livro já pertence a essa lista! Portanto, não foi adicionado!\n");
         return;
@@ -56,7 +54,7 @@ void insereLivro(tLista* l, tLivro* livro){
     l->ult = nova;
 }
 
-void retiraLivro(tLista* l, char* nome){
+void retiraLivro(tListaLivro* l, char* nome){
     tNode* p = buscaLivroLista(l, key);
 
     if(p == NULL){ 
@@ -85,7 +83,7 @@ void imprimeListaLivro(tListaLivro* l){
     tNode* p = l->prim;
 
     while(p != NULL){
-        if(p>prox != NULL){
+        if(p->prox != NULL){
             printf("%s, ", retornaNomeLivro(p->livro));
         }else{
             printf("%s", retornaNomeLivro(p->livro));
