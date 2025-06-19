@@ -3,9 +3,9 @@
 struct leitor{
     int id;
     char* nome;
-    tLista* recomendacoes;
-    tLista* desejados;
-    tLista* lidos;
+    tListaLivro* recomendacoes;
+    tListaLivro* desejados;
+    tListaLivro* lidos;
     tLista* afinidades;
 };
 
@@ -15,12 +15,16 @@ tLeitor* criaLeitor(int id, char* nome){
     leitor->nome = strdup(nome);
     leitor->id = id;
     
-    leitor->recomendacoes = criaLista();
-    leitor->desejados = criaLista();
-    leitor->lidos = criaLista();
+    leitor->recomendacoes = criaListaLivro();
+    leitor->desejados = criaListaLivro();
+    leitor->lidos = criaListaLivro();
     leitor->afinidades = criaLista();
 
     return leitor;
+}
+
+void adicionaLivroLido(tLeitor* leitor, tLivro* livro){
+    insereLivro(leitor->lidos, livro);
 }
 
 void liberaLeitor(void* leitor){

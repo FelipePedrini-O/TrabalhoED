@@ -18,6 +18,12 @@ tLivro* criaLivro(char* titulo, char* autor, char* genero, int ano_publicacao){
     return livro;
 }
 
+char* retornaNomeLivro(void* livro){
+    tLivro* l = (tLivro*) livro;
+
+    return l->titulo;
+}
+
 void liberaLivro(void* livro){
     tLivro* l = (tLivro*) livro;
 

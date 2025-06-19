@@ -9,6 +9,8 @@ typedef struct livro tLivro;
 
 tLivro* criaLivro(char* titulo, char* autor, char* genero, int ano_publicacao);
 
+char* retornaNomeLivro(void* livro);
+
 void liberaLivro(void* livro);
 
 #endif
