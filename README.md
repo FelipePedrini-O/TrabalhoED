@@ -15,15 +15,15 @@ sua lista de lidos; ✅
 livro à sua lista de desejados; ✅
 
 5. **Recomendar Livro**: um leitor pode recomendar um livro para outro
-(ambos cadastrados);
+(ambos cadastrados); ✅
 
 6. **Aceitar Recomendações**: um recomendação pode ser aceita ou
 rejeitada o que significa, respectivamente, adicionar o livro na lista de
-desejos e remover da lista de recomendações;
+desejos e remover da lista de recomendações; ✅
 
 7. **Remover Recomendações**: uma recomendação, independente do
 status, pode ser removida da lista de recomendações de um
-determinado leitor;
+determinado leitor; ✅
 
 8. **Descobrir livros em comum entre leitores**: determinar quais são os
 livros lidos em comum entre dois leitores;
