@@ -15,7 +15,7 @@ tLeitor *retornaLeitorListaLeitores(tListaLeitores *l, int id);
 
 int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
 
-int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_destino);
+int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
 
 int recusaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
 

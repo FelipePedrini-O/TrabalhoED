@@ -53,21 +53,23 @@ int main(){
 
     /* Testes de recomendacao */
 
-    printf("\nLeitor %s está recomendando 'Duna' para Leitor %s...\n", 
+    printf("\nLeitor %s está recomendando 'Duna' para Leitor %s\n", 
         retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor2));
     recomendaLivroListaLeitores(listaLeitores, retornaLivroLista(biblioteca, "Duna"), 
         retornaIdLeitor(leitor1), retornaIdLeitor(leitor2));
 
-    printf("\nLeitor %s aceita a recomendação de 'Duna'\n", retornaNomeLeitor(leitor2));
+    printf("\nLeitor %s aceita a recomendação de 'Duna' feita por %s\n", 
+        retornaNomeLeitor(leitor2), retornaNomeLeitor(leitor1));
     aceitaRecomendacaoListaLeitores(listaLeitores, retornaLivroLista(biblioteca, "Duna"), 
-        retornaIdLeitor(leitor2));
+        retornaIdLeitor(leitor1), retornaIdLeitor(leitor2));
 
-    printf("\nLeitor %s está recomendando '1984' para Leitor %s...\n", 
+    printf("\nLeitor %s está recomendando '1984' para Leitor %s\n", 
         retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor3));
     recomendaLivroListaLeitores(listaLeitores, retornaLivroLista(biblioteca, "1984"), 
         retornaIdLeitor(leitor1), retornaIdLeitor(leitor3));
 
-    printf("\nLeitor %s recusa a recomendação de '1984'\n", retornaNomeLeitor(leitor3));
+    printf("\nLeitor %s recusa a recomendação de '1984' feita por %s\n", 
+        retornaNomeLeitor(leitor3), retornaNomeLeitor(leitor1));
     recusaRecomendacaoListaLeitores(listaLeitores, retornaLivroLista(biblioteca, "1984"), 
         retornaIdLeitor(leitor1), retornaIdLeitor(leitor3));
 

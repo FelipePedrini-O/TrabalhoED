@@ -4,6 +4,8 @@
 #include "utils.h"
 #include "listaLeitores.h"
 
+static int leitoresValidos(tLeitor *origem, tLeitor *destino);
+
 // Node
 typedef struct node
 {
@@ -113,16 +115,8 @@ int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem,
     tLeitor *origem = retornaLeitorListaLeitores(l, id_origem);
     tLeitor *destino = retornaLeitorListaLeitores(l, id_destino);
 
-    if(!origem)
-    {
-        printf("Recomendacao falhou! Leitor origem com id %d nao encontrado!\n", id_origem);
+    if (!leitoresValidos(origem, destino))
         return 0;
-    }
-    if(!destino)
-    {
-        printf("Recomendacao falhou! Leitor destino com id %d nao encontrado!\n", id_destino);
-        return 0;
-    }
 
     // Verifica se o livro já foi recomendado antes
     tListaLivro *recomendados = retornaListarecomendados(destino);
@@ -142,15 +136,13 @@ int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem,
     A obrigacao de encontrar e verificar o livro eh do cliente
     Retorna 0 em caso de erro na verificacao e 1 em caso de exito
  */
-int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_destino)
+int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino)
 {
+    tLeitor *origem = retornaLeitorListaLeitores(l, id_origem);
     tLeitor *destino = retornaLeitorListaLeitores(l, id_destino);
 
-    if(!destino)
-    {
-        printf("Recomendacao falhou! Leitor destino com id %d nao encontrado!\n", id_destino);
+    if (!leitoresValidos(origem, destino))
         return 0;
-    }
 
     retiraLivro(retornaListarecomendados(destino), retornaNomeLivro(livro));
 
@@ -168,13 +160,11 @@ int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_des
  */
 int recusaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino)
 {
+    tLeitor *origem = retornaLeitorListaLeitores(l, id_origem);
     tLeitor *destino = retornaLeitorListaLeitores(l, id_destino);
 
-    if(!destino)
-    {
-        printf("Recomendacao falhou! Leitor destino com id %d nao encontrado!\n", id_destino);
+    if (!leitoresValidos(origem, destino))
         return 0;
-    }
 
     retiraLivro(retornaListarecomendados(destino), retornaNomeLivro(livro));
     return 1;
@@ -205,4 +195,19 @@ void liberaListaLeitores(tListaLeitores *l)
         }
         free(l);
     }
+}
+
+static int leitoresValidos(tLeitor *origem, tLeitor *destino)
+{
+    if (!origem)
+    {
+        printf("Leitor origem nao encontrado!\n");
+        return 0;
+    }
+    if (!destino)
+    {
+        printf("Leitor destino nao encontrado!\n");
+        return 0;
+    }
+    return 1;
 }
