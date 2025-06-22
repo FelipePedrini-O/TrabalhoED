@@ -11,6 +11,8 @@ tLivro* criaLivro(char* titulo, char* autor, char* genero, int ano_publicacao, i
 
 char* retornaNomeLivro(void* livro);
 
+int retornaIdLivro(void *livro);
+
 void liberaLivro(void* livro);
 
 #endif

@@ -9,7 +9,7 @@ tListaLeitores *criaListaLeitores();
 
 void insereListaLeitores(tListaLeitores *l, tLeitor *leitor);
 
-tLeitor *retiraListaLeitores(tListaLeitores *l, int id);
+void retiraListaLeitores(tListaLeitores *l, int id); // Alterado para void para liberar o leitor dentro da funcao
 
 tLeitor *retornaLeitorListaLeitores(tListaLeitores *l, int id);
 
@@ -24,7 +24,7 @@ int descobreLivrosComumListaLeitores(tListaLeitores *l, int id_origem, int id_de
 
 void imprimeNomesListaLeitores(tListaLeitores* l);
 
-void liberaLeitoresDaListaLeitores(tListaLeitores *l);
+// void liberaLeitoresDaListaLeitores(tListaLeitores *l); Funcao a ser obervada por alteracao na libera principal
 
 void criaAfinidadesEntreLeitores(tListaLeitores* l);
 //Fim das Funcoes (2)

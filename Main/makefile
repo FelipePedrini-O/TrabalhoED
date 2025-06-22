@@ -1,6 +1,6 @@
 all:
 	gcc *.c -o test
-	./test < input.txt
+	./test
 
 clean:
 	rm -f test

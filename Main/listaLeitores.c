@@ -37,7 +37,10 @@ void imprimeNode(tNode *n)
 void liberaNode(tNode *n)
 {
     if(n)
+    {
+        liberaLeitor(n->leitor); // Alteracao feita para liberar o leitor dentro da lista
         free(n);
+    }
 }
 
 // Lista Leitores
@@ -71,7 +74,7 @@ void insereListaLeitores(tListaLeitores *l, tLeitor *leitor)
         l->prim = n;
 }
 
-tLeitor *retiraListaLeitores(tListaLeitores *l, int id)
+void retiraListaLeitores(tListaLeitores *l, int id)
 {
     tNode *temp = l->prim;
     while(temp)
@@ -87,13 +90,12 @@ tLeitor *retiraListaLeitores(tListaLeitores *l, int id)
             if(temp->prox == NULL)
                 l->ult = temp->ant;
 
-            tLeitor *leitor = temp->leitor;
             liberaNode(temp);
-            return leitor;
+            return;
         }
         temp = temp->prox;
     }
-    return NULL;
+    return;
 }
 
 tLeitor *retornaLeitorListaLeitores(tListaLeitores *l, int id)
@@ -122,7 +124,7 @@ int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem,
 
     // Verifica se o livro já foi recomendado antes
     tListaLivro *recomendados = retornaListarecomendados(destino);
-    tLivro *jaRecomendado = retornaLivroLista(recomendados, retornaNomeLivro(livro));
+    tLivro *jaRecomendado = retornaLivroLista(recomendados, retornaIdLivro(livro));
     if (jaRecomendado)
     {
         printf("Recomendacao ignorada! Livro '%s' ja foi recomendado ao leitor com id %d\n", 
@@ -146,11 +148,11 @@ int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_ori
     if (!leitoresValidos(origem, destino))
         return 0;
 
-    retiraLivro(retornaListarecomendados(destino), retornaNomeLivro(livro));
+    retiraLivro(retornaListarecomendados(destino), retornaIdLivro(livro));
 
     // Verificacao da unicidade do livro na lista
     tListaLivro *desejados = retornaListaDesejados(destino);
-    tLivro *livroNaLista = retornaLivroLista(desejados, retornaNomeLivro(livro));
+    tLivro *livroNaLista = retornaLivroLista(desejados, retornaIdLivro(livro));
     if(!livroNaLista)
         adicionaLivroLista(livro, desejados);
     return 1;
@@ -168,7 +170,7 @@ int recusaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_ori
     if (!leitoresValidos(origem, destino))
         return 0;
 
-    retiraLivro(retornaListarecomendados(destino), retornaNomeLivro(livro));
+    retiraLivro(retornaListarecomendados(destino), retornaIdLivro(livro));
     return 1;
 }
 
@@ -213,26 +215,30 @@ void imprimeNomesListaLeitores(tListaLeitores* l){
     }
 }
 
-void liberaLeitoresDaListaLeitores(tListaLeitores *l)
+/* void liberaLeitoresDaListaLeitores(tListaLeitores *l)
 {
     if(l)
     {
         tNode *temp = l->prim;
         while(temp)
         {
-            tNode *aux = temp;
+            tNode *aux = temp;       // Funcao a ser obervada por alteracao na libera principal
             temp = temp->prox;
             liberaLeitor(aux->leitor);
         }
     }
-}
+} */
 
+// Funcao alterada para evitar duplicatas na lista de afinidades
 static void insereAfinidadeEntreLeitores(tListaLeitores* l, tLeitor* target){
     tNode* p  = l->prim;
 
     while(p != NULL){
         if(p->leitor != target && existeGostoEmComum(p->leitor, target)){
-            insereListaLeitores((tListaLeitores*) retornaAfinidades(target), p->leitor);
+            // Só insere se ainda não estiver presente
+            if (!retornaLeitorListaLeitores(retornaAfinidades(target), retornaIdLeitor(p->leitor))) {
+                insereListaLeitores(retornaAfinidades(target), p->leitor);
+            }
         }
         p = p->prox;
     }

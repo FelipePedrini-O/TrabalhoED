@@ -21,11 +21,12 @@ tListaLivro* criaListaLivro(){
     return l;
 }
 
-tLivro* retornaLivroLista(tListaLivro* l, char* key){
+// Alterado key para int para ficar conforme os comandos
+tLivro* retornaLivroLista(tListaLivro* l, int key){
     tNode* p = l->prim;
 
     while(p != NULL){
-        if(strcmp(retornaNomeLivro(p->livro), key) == 0){
+        if(retornaIdLivro(p->livro) == key){
             return p->livro;
         }
 
@@ -35,11 +36,12 @@ tLivro* retornaLivroLista(tListaLivro* l, char* key){
     return NULL;
 }
 
-static tNode* buscaLivroLista(tListaLivro* l, char* key){
+// Alterado key para int para ficar conforme os comandos
+static tNode* buscaLivroLista(tListaLivro* l, int key){
     tNode* p = l->prim;
 
     while(p != NULL){
-        if(strcmp(retornaNomeLivro(p->livro), key) == 0){
+        if(retornaIdLivro(p->livro) == key){
             return p;
         }
 
@@ -49,8 +51,9 @@ static tNode* buscaLivroLista(tListaLivro* l, char* key){
     return NULL;
 }
 
+// Alterado key para int para ficar conforme os comandos
 void insereLivro(tListaLivro* l, tLivro* livro){
-    if(buscaLivroLista(l, retornaNomeLivro(livro)) != NULL){
+    if(buscaLivroLista(l, retornaIdLivro(livro)) != NULL){
         printf("Livro já pertence a essa lista! Portanto, não foi adicionado!\n");
         return;
     }
@@ -69,8 +72,9 @@ void insereLivro(tListaLivro* l, tLivro* livro){
     l->ult = nova;
 }
 
-void retiraLivro(tListaLivro* l, char* nome){
-    tNode* p = buscaLivroLista(l, nome);
+// Alterado key para int para ficar conforme os comandos
+void retiraLivro(tListaLivro* l, int key){
+    tNode* p = buscaLivroLista(l, key);
 
     if(p == NULL){ 
         return;
@@ -107,7 +111,7 @@ tListaLivro* retornaLivrosEmComumListaLivro(tListaLivro* orig, tListaLivro* dest
 
     tNode* p = orig->prim;
     while(p != NULL){
-        if(retornaLivroLista(dest, retornaNomeLivro(p->livro)) != NULL){
+        if(retornaLivroLista(dest, retornaIdLivro(p->livro)) != NULL){
             insereLivro(comuns, p->livro);
         }
         p = p->prox;

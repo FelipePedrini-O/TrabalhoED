@@ -11,4 +11,10 @@ void checkMemory(void *p);
 void leLeitores(tListaLeitores* lista);
 //Fim das funcoes (2)
 
+// Novas funcoes (3)
+FILE *incializaComandos();
+int leComando(FILE *comandos, int *funcionalidade, int *id_1, int *id_2, int *id_3);
+void liberaComandos(FILE *comandos);
+// Fim das funcoes (3)
+
 #endif

@@ -13,9 +13,9 @@ tListaLivro* criaListaLivro();
 
 void insereLivro(tListaLivro* l, tLivro* livro);
 
-void retiraLivro(tListaLivro* l, char* nome);
+void retiraLivro(tListaLivro* l, int key); // Alterado key para int para ficar conforme os comandos
 
-tLivro* retornaLivroLista(tListaLivro* l, char* key);
+tLivro* retornaLivroLista(tListaLivro* l, int key); // Alterado key para int para ficar conforme os comandos
 
 //Funcoes novas (2)
 int listaVazia(tListaLivro* l);

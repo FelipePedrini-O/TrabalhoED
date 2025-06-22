@@ -44,6 +44,14 @@ char* retornaNomeLivro(void* livro){
     return l->titulo;
 }
 
+// Funcoes novas
+int retornaIdLivro(void *livro){
+    tLivro* l = (tLivro*) livro;
+
+    return l->id;
+}
+// Fim das funcoes novas
+
 void liberaLivro(void* livro){
     tLivro* l = (tLivro*) livro;
 

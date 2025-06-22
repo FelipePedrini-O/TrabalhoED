@@ -92,8 +92,9 @@ void adicionaLivroLista(tLivro* livro, tListaLivro* lista){
     insereLivro(lista, livro);
 }
 
-void retiraLivroLista(tListaLivro* lista, char* nome){
-    retiraLivro(lista, nome);
+// Alterado key para int para ficar conforme os comandos
+void retiraLivroLista(tListaLivro* lista, int key){
+    retiraLivro(lista, key);
 }
 
 //Funcoes novas (2)
@@ -114,7 +115,7 @@ void liberaLeitor(void* leitor){
         liberaLista(l->gostos);
 
         liberaListaLivro(l->recomendacoes);
-        liberaListaLeitores(l->afinidades);
+        //liberaListaLeitores(l->afinidades);       // Comentado para evitar double free
         liberaListaLivro(l->desejados);
         liberaListaLivro(l->lidos);
         

@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 void leLivros(tListaLivro* lista){
-    FILE* f_livros = fopen("Livros.txt", "r");
+    FILE* f_livros = fopen("livros.txt", "r"); // Alterado de "Livros.txt" para "livros.txt"
     if(!f_livros){
         exit(1);
     }
@@ -56,9 +56,9 @@ void leLeitores(tListaLeitores* lista){
         fscanf(f_leitores, "%[^\n]%*c", leitor_gosto);
         char* gosto = strdup(leitor_gosto);
         insereListaFinal(gostos, gosto, free, (void*) printf);
-        printf("%s: ", nome);
-        imprimeLista(gostos);
-        printf("\n");
+        //printf("%s: ", nome);
+        //imprimeLista(gostos); //Comentado para debug da main
+        //printf("\n");
         insereListaLeitores(lista, criaLeitor(id, nome, gostos));
     }
 
@@ -66,6 +66,39 @@ void leLeitores(tListaLeitores* lista){
     fclose(f_leitores);
 }
 //Fim das Funcoes (2)
+
+// Novas Funcoes (3)
+
+FILE *incializaComandos()
+{
+    FILE* file = fopen("comandos.txt", "r");
+    if(!file){
+        fprintf(stderr, "ERRO! Arquivo comandos.txt nao encontrado\n");
+        exit(1);
+    }
+
+    char header[256];
+    fgets(header, sizeof(header), file);
+    return file;
+}
+
+int leComando(FILE *comandos, int *funcionalidade, int *id_1, int *id_2, int *id_3)
+{
+    int flag = fscanf(comandos, "%d;%d;%d;%d", funcionalidade, id_1, id_2, id_3);
+    if (flag == EOF) return 1;
+    if (flag != 4) {
+        fprintf(stderr, "ERRO! Linha malformada no arquivo de comandos\n");
+        return 1;
+    }
+    return 0;
+}
+
+void liberaComandos(FILE *comandos)
+{
+    fclose(comandos);
+}
+
+//Fim das Funcoes (3)
 
 void checkMemory(void *p)
 {
@@ -76,6 +109,6 @@ void checkMemory(void *p)
     }
 }
 
-tLivro* retornaLivroBiblioteca(tListaLivro* lista, char* titulo){
-    return retornaLivroLista(lista, titulo);
+tLivro* retornaLivroBiblioteca(tListaLivro* lista, int key){
+    return retornaLivroLista(lista, key);
 }

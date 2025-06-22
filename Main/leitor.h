@@ -20,7 +20,7 @@ tLeitor* criaLeitor(int id, char* nome, tLista* gostos);
 
 void adicionaLivroLista(tLivro* livro, tListaLivro* lista);
 
-void retiraLivroLista(tListaLivro* lista, char* nome);
+void retiraLivroLista(tListaLivro* lista, int key); // Alterado key para int para ficar conforme os comandos
 
 //Funcoes novas (2)
 
