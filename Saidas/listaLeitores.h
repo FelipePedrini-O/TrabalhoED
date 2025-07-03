@@ -13,11 +13,11 @@ void retiraListaLeitores(tListaLeitores *l, int id); // Alterado para void para 
 
 tLeitor *retornaLeitorListaLeitores(tListaLeitores *l, int id);
 
-int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
+int recomendaLivroListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino, FILE* saidas_f);
 
-int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
+int aceitaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino, FILE* saidas_f);
 
-int recusaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino);
+int recusaRecomendacaoListaLeitores(tListaLeitores *l, tLivro *livro, int id_origem, int id_destino, FILE* saidas_f);
 
 // Funcoes Novas (2)
 int descobreLivrosComumListaLeitores(tListaLeitores *l, int id_origem, int id_destino, FILE* saidas_f);

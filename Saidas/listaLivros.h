@@ -9,6 +9,10 @@
 
 typedef struct listaLivro tListaLivro;
 
+/*
+    Varios hotfixes foram feitos nas funcoes para evitar erros de segfault
+*/
+
 tListaLivro* criaListaLivro();
 
 void insereLivro(tListaLivro* l, tLivro* livro);

@@ -23,98 +23,113 @@ tListaLivro* criaListaLivro(){
 
 // Alterado key para int para ficar conforme os comandos
 tLivro* retornaLivroLista(tListaLivro* l, int key){
-    tNode* p = l->prim;
-
-    while(p != NULL){
-        if(retornaIdLivro(p->livro) == key){
-            return p->livro;
+    if(l)
+    {
+        tNode* p = l->prim;
+    
+        while(p != NULL){
+            if(retornaIdLivro(p->livro) == key){
+                return p->livro;
+            }
+    
+            p = p->prox;
         }
-
-        p = p->prox;
     }
-
     return NULL;
 }
 
 // Alterado key para int para ficar conforme os comandos
 static tNode* buscaLivroLista(tListaLivro* l, int key){
-    tNode* p = l->prim;
-
-    while(p != NULL){
-        if(retornaIdLivro(p->livro) == key){
-            return p;
+    if(l)
+    {
+        tNode* p = l->prim;
+    
+        while(p != NULL){
+            if(retornaIdLivro(p->livro) == key){
+                return p;
+            }
+    
+            p = p->prox;
         }
-
-        p = p->prox;
     }
-
     return NULL;
 }
 
 // Alterado key para int para ficar conforme os comandos
 void insereLivro(tListaLivro* l, tLivro* livro){
-    if(buscaLivroLista(l, retornaIdLivro(livro)) != NULL){
-        printf("Livro já pertence a essa lista! Portanto, não foi adicionado!\n");
-        return;
+    if(l)
+    {
+        if(buscaLivroLista(l, retornaIdLivro(livro)) != NULL){
+            printf("Livro já pertence a essa lista! Portanto, não foi adicionado!\n");
+            return;
+        }
+    
+        tNode* nova = malloc(sizeof(*nova));
+        nova->prox = NULL;
+        nova->ant = l->ult; 
+        nova->livro = livro;
+    
+        if(l->prim == NULL){
+            l->prim = nova;
+        }else{
+            l->ult->prox = nova;
+        }
+    
+        l->ult = nova;
     }
-
-    tNode* nova = malloc(sizeof(*nova));
-    nova->prox = NULL;
-    nova->ant = l->ult; 
-    nova->livro = livro;
-
-    if(l->prim == NULL){
-        l->prim = nova;
-    }else{
-        l->ult->prox = nova;
-    }
-
-    l->ult = nova;
 }
 
 // Alterado key para int para ficar conforme os comandos
 void retiraLivro(tListaLivro* l, int key){
-    tNode* p = buscaLivroLista(l, key);
-
-    if(p == NULL){ 
+    if(l)
+    {
+        tNode* p = buscaLivroLista(l, key);
+    
+        if(p == NULL){ 
+            return;
+        }
+    
+        if(p == l->prim){ 
+            l->prim = p->prox;
+        }else{
+            p->ant->prox = p->prox;
+        }
+    
+        if(p == l->ult){ 
+            l->ult = p->ant;
+        }else{
+            p->prox->ant = p->ant;
+        }
+    
+        free(p);
+    
         return;
     }
-
-    if(p == l->prim){ 
-        l->prim = p->prox;
-    }else{
-        p->ant->prox = p->prox;
-    }
-
-    if(p == l->ult){ 
-        l->ult = p->ant;
-    }else{
-        p->prox->ant = p->ant;
-    }
-
-    free(p);
-
-    return;
 }
 
 //Funcoes Novas (2)
 int listaVazia(tListaLivro* l){
-    if(l->prim == NULL){
-        return 1;
+    if(l)
+    {
+        if(l->prim == NULL){
+            return 1;
+        }
     }
-
     return 0;
 }
 
 tListaLivro* retornaLivrosEmComumListaLivro(tListaLivro* orig, tListaLivro* dest){
     tListaLivro* comuns = criaListaLivro();
 
-    tNode* p = orig->prim;
-    while(p != NULL){
-        if(retornaLivroLista(dest, retornaIdLivro(p->livro)) != NULL){
-            insereLivro(comuns, p->livro);
+    if(orig && dest)
+    {
+        tNode* p = orig->prim;
+        while(p != NULL){
+            if(retornaLivroLista(dest, retornaIdLivro(p->livro)) != NULL){
+                insereLivro(comuns, p->livro);
+            }
+            p = p->prox;
         }
-        p = p->prox;
     }
 
     return comuns;
@@ -122,23 +137,28 @@ tListaLivro* retornaLivrosEmComumListaLivro(tListaLivro* orig, tListaLivro* dest
 //Fim Funcoes (2)
 
 void imprimeListaLivro(tListaLivro* l, FILE* saidas_f){
-    tNode* p = l->prim;
-
-    while(p != NULL){
-        if(p->prox != NULL){
-            fprintf(saidas_f, "%s, ", retornaNomeLivro(p->livro));
-        }else{
-            fprintf(saidas_f, "%s", retornaNomeLivro(p->livro));
+    if(l)
+    {
+        tNode* p = l->prim;
+    
+        while(p != NULL){
+            if(p->prox != NULL){
+                if(p->livro)
+                    fprintf(saidas_f, "%s, ", retornaNomeLivro(p->livro));
+            }else{
+                if(p->livro)
+                    fprintf(saidas_f, "%s", retornaNomeLivro(p->livro));
+            }
+    
+            p = p->prox;
         }
-
-        p = p->prox;
     }
 }
 
 void liberaListaLivro(tListaLivro* l){
-    tNode* p = l->prim;
-
-    if(l != NULL){
+    if(l)
+    {
+        tNode* p = l->prim;
         while(p != NULL){
             tNode* aux = p->prox;
             free(p);
@@ -151,17 +171,20 @@ void liberaListaLivro(tListaLivro* l){
 }
 
 void liberaBiblioteca(tListaLivro* l){
-    tNode* p = l->prim;
-
-    if(l != NULL){
-        while(p != NULL){
-            tNode* aux = p->prox;
-            liberaLivro(p->livro);
-            free(p);
-            p = aux;
+    if(l)
+    {
+        tNode* p = l->prim;
+    
+        if(l != NULL){
+            while(p != NULL){
+                tNode* aux = p->prox;
+                liberaLivro(p->livro);
+                free(p);
+                p = aux;
+            }
+    
+            free(l);
+            l = NULL;
         }
-
-        free(l);
-        l = NULL;
     }
 }

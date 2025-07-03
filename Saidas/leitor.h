@@ -5,6 +5,9 @@
 #include "livro.h"
 #include "listaLivros.h"
 
+/*
+    Varios hotfixes foram feitos nas funcoes para evitar erros de segfault
+*/
 
 typedef struct leitor tLeitor;
 
@@ -18,7 +21,9 @@ void imprimeLeitor(tLeitor* l, FILE* saidas_f);
 
 tLeitor* criaLeitor(int id, char* nome, tLista* gostos);
 
-void adicionaLivroLista(tLivro* livro, tListaLivro* lista);
+ // Alterado retorno para int para adicionar a flag
+ // Adicionado protecao na funcao para caso de livro igual
+int adicionaLivroLista(tLivro* livro, tListaLivro* lista);
 
 void retiraLivroLista(tListaLivro* lista, int key); // Alterado key para int para ficar conforme os comandos
 

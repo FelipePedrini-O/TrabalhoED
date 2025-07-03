@@ -40,15 +40,17 @@ tLivro* leLivro(){
 
 char* retornaNomeLivro(void* livro){
     tLivro* l = (tLivro*) livro;
-
-    return l->titulo;
+    if(l)
+        return l->titulo;
+    return NULL;
 }
 
 // Funcoes novas
 int retornaIdLivro(void *livro){
     tLivro* l = (tLivro*) livro;
-
-    return l->id;
+    if(l)
+        return l->id;
+    return -1; // -1 para ponteiro do livro invalido
 }
 // Fim das funcoes novas
 

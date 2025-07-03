@@ -34,62 +34,77 @@ tLeitor* criaLeitor(int id, char* nome, tLista* gostos){
 
 int retornaIdLeitor(tLeitor *l)
 {
-    return l->id;
+    if(l)
+        return l->id;
 }
 
 char *retornaNomeLeitor(tLeitor* l)
 {
-    return l->nome;
+    if(l)
+        return l->nome;
 }
 
 void imprimeLeitor(tLeitor* l, FILE* saidas_f)//Imprime leitor modificado
 {
-    checkMemory(l);
-
-    //printf("===== Leitor =====\n");
-
-    //printf("ID: %d\n", l->id);
-    fprintf(saidas_f, "Leitor: %s\n", l->nome);
-
-    fprintf(saidas_f, "Lidos: ");
-    imprimeListaLivro(l->lidos, saidas_f);
-    fprintf(saidas_f, "\n");
-
-    fprintf(saidas_f, "Desejados: ");
-    imprimeListaLivro(l->desejados, saidas_f);
-    fprintf(saidas_f, "\n");
-
-    fprintf(saidas_f, "Recomendacoes: ");
-    imprimeListaLivro(l->recomendacoes, saidas_f);
-    fprintf(saidas_f, "\n");
-
-    fprintf(saidas_f, "Afinidades: ");
-    imprimeNomesListaLeitores(l->afinidades, saidas_f);
-    fprintf(saidas_f, "\n");
-
-    //printf("==================\n");
+    if(l)
+    {
+        checkMemory(l);
+    
+        //printf("===== Leitor =====\n");
+    
+        //printf("ID: %d\n", l->id);
+        fprintf(saidas_f, "Leitor: %s\n", l->nome);
+    
+        fprintf(saidas_f, "Lidos: ");
+        imprimeListaLivro(l->lidos, saidas_f);
+        fprintf(saidas_f, "\n");
+    
+        fprintf(saidas_f, "Desejados: ");
+        imprimeListaLivro(l->desejados, saidas_f);
+        fprintf(saidas_f, "\n");
+    
+        fprintf(saidas_f, "Recomendacoes: ");
+        imprimeListaLivro(l->recomendacoes, saidas_f);
+        fprintf(saidas_f, "\n");
+    
+        fprintf(saidas_f, "Afinidades: ");
+        imprimeNomesListaLeitores(l->afinidades, saidas_f);
+        fprintf(saidas_f, "\n");
+    
+        //printf("==================\n");
+    }
 }
 
 // Fim das funcoes novas
 
 tListaLivro* retornaListaLidos(tLeitor* l){
-    return l->lidos;
+    if(l)
+        return l->lidos;
 }
 
 tListaLivro* retornaListarecomendados(tLeitor* l){
-    return l->recomendacoes;
+    if(l)
+        return l->recomendacoes;
 }
 
 tListaLivro* retornaListaDesejados(tLeitor* l){
-    return l->desejados;
+    if(l)
+        return l->desejados;
 }
 
 void* retornaAfinidades(tLeitor* l){//Modificado, tem que ser desse jeito pois nao pode implementar listaLeitores no .h (recursivo)
-    return (tListaLeitores*) l->afinidades;
+    if(l)
+        return (tListaLeitores*) l->afinidades;
+    return NULL;
 }
 
-void adicionaLivroLista(tLivro* livro, tListaLivro* lista){
-    insereLivro(lista, livro);
+int adicionaLivroLista(tLivro* livro, tListaLivro* lista){ // Alterado retorno para int para adicionar a flag
+    if(!retornaLivroLista(lista, retornaIdLivro(livro)))
+    {
+        insereLivro(lista, livro);
+        return 1;
+    }
+    return 0;
 }
 
 // Alterado key para int para ficar conforme os comandos
@@ -99,8 +114,11 @@ void retiraLivroLista(tListaLivro* lista, int key){
 
 //Funcoes novas (2)
 int existeGostoEmComum(tLeitor* l1, tLeitor* l2){
-    if(existeElementoNaOutraLista(l1->gostos, l2->gostos, strcmp)){
-        return 1;
+    if(l1 && l2)
+    {
+        if(existeElementoNaOutraLista(l1->gostos, l2->gostos, strcmp)){
+            return 1;
+        }
     }
 
     return 0;
@@ -110,7 +128,6 @@ int existeGostoEmComum(tLeitor* l1, tLeitor* l2){
 //Funcao (3)
 
 int existeAfinidadeLeitores(tLeitor* orig, tLeitor* dest){//Nova funcao
-    
     // Se for NULL retorna 0, se não retorna 1
     if (!retornaLeitorListaLeitores(retornaAfinidades(dest), retornaIdLeitor(orig)) && 
         !existeElementoEmComum(retornaAfinidades(orig), retornaAfinidades(dest))){

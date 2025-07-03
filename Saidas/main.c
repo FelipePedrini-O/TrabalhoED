@@ -35,45 +35,90 @@ int main(void)
             {
                 tLeitor *leitor = retornaLeitorListaLeitores(leitores, id_origem);
                 tLivro *livro = retornaLivroLista(biblioteca, id_livro);
-                adicionaLivroLista(livro, retornaListaLidos(leitor));
-                fprintf(saidas_f, "%s leu \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                if(livro && leitor)
+                {
+                    if(adicionaLivroLista(livro, retornaListaLidos(leitor)))
+                        fprintf(saidas_f, "%s leu \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                    else
+                        fprintf(saidas_f, "%s já leu \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                }
+                if(!livro)
+                    fprintf(saidas_f, "Erro: Livro com ID %d não encontrado\n", id_livro);
+                if(!leitor)
+                    fprintf(saidas_f, "Erro: Leitor com ID %d não encontrado\n", id_origem);
                 break;
             }
             case 2: // Adicionar Livros Desejados
             {
                 tLeitor *leitor = retornaLeitorListaLeitores(leitores, id_origem);
                 tLivro *livro = retornaLivroLista(biblioteca, id_livro);
-                adicionaLivroLista(livro, retornaListaDesejados(leitor));
-                fprintf(saidas_f, "%s deseja ler \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                if(livro && leitor)
+                {
+                    if(adicionaLivroLista(livro, retornaListaDesejados(leitor)))
+                        fprintf(saidas_f, "%s deseja ler \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                    else
+                        fprintf(saidas_f, "%s já deseja ler \"%s\"\n", retornaNomeLeitor(leitor), retornaNomeLivro(livro));
+                }
+                if(!livro)
+                    fprintf(saidas_f, "Erro: Livro com ID %d não encontrado\n", id_livro);
+                if(!leitor)
+                    fprintf(saidas_f, "Erro: Leitor com ID %d não encontrado\n", id_origem);
                 break;
             }
             case 3: // Recomendar um Livro
             {   
-                tLeitor *leitor1 = retornaLeitorListaLeitores(leitores, id_origem);
-                tLeitor *leitor2 = retornaLeitorListaLeitores(leitores, id_destino);
                 tLivro *livro = retornaLivroLista(biblioteca, id_livro);
-                recomendaLivroListaLeitores(leitores, livro, id_origem, id_destino);
-                fprintf(saidas_f, "%s recomenda \"%s\" para %s\n", retornaNomeLeitor(leitor1), retornaNomeLivro(livro), retornaNomeLeitor(leitor2));
+                if(!livro)
+                {
+                    tLeitor *origem = retornaLeitorListaLeitores(leitores, id_origem);
+                    tLeitor *destino = retornaLeitorListaLeitores(leitores, id_destino);
+                    if(!retornaLivroLista(retornaListarecomendados(destino), retornaIdLivro(livro)) && origem == destino)
+                    {
+                        fprintf(saidas_f, "%s não possui recomendação do livro ID %d feita por %s\n", retornaNomeLeitor(destino), id_livro, retornaNomeLeitor(origem));
+                        break;
+                    }
+                    fprintf(saidas_f, "Erro: Livro com ID %d não encontrado\n", id_livro);
+                    break;
+                }
+                recomendaLivroListaLeitores(leitores, livro, id_origem, id_destino, saidas_f);
                 break;
             }
             case 4: // Aceitar Recomendação
             {
-                tLeitor *leitor1 = retornaLeitorListaLeitores(leitores, id_origem);
-                tLeitor *leitor2 = retornaLeitorListaLeitores(leitores, id_destino);
                 tLivro *livro = retornaLivroLista(biblioteca, id_livro);
+                if(!livro)
+                {
+                    tLeitor *origem = retornaLeitorListaLeitores(leitores, id_origem);
+                    tLeitor *destino = retornaLeitorListaLeitores(leitores, id_destino);
+                    if(!retornaLivroLista(retornaListarecomendados(destino), retornaIdLivro(livro)) && origem == destino)
+                    {
+                        fprintf(saidas_f, "%s não possui recomendação do livro ID %d feita por %s\n", retornaNomeLeitor(destino), id_livro, retornaNomeLeitor(origem));
+                        break;
+                    }
+                    fprintf(saidas_f, "Erro: Livro com ID %d não encontrado\n", id_livro);
+                    break;
+                }
                 // Origem e destino sao trocados segundo a documentacao
-                aceitaRecomendacaoListaLeitores(leitores, livro, id_destino, id_origem);
-                fprintf(saidas_f, "%s aceita recomendação \"%s\" de %s\n", retornaNomeLeitor(leitor1), retornaNomeLivro(livro), retornaNomeLeitor(leitor2));
+                aceitaRecomendacaoListaLeitores(leitores, livro, id_destino, id_origem, saidas_f);
                 break;
             }
             case 5: // Remover Recomendação
             {
-                tLeitor *leitor1 = retornaLeitorListaLeitores(leitores, id_origem);
-                tLeitor *leitor2 = retornaLeitorListaLeitores(leitores, id_destino);
                 tLivro *livro = retornaLivroLista(biblioteca, id_livro);
+                if(!livro)
+                {
+                    tLeitor *origem = retornaLeitorListaLeitores(leitores, id_origem);
+                    tLeitor *destino = retornaLeitorListaLeitores(leitores, id_destino);
+                    if(!retornaLivroLista(retornaListarecomendados(destino), retornaIdLivro(livro)) && origem == destino)
+                    {
+                        fprintf(saidas_f, "%s não possui recomendação do livro ID %d feita por %s\n", retornaNomeLeitor(destino), id_livro, retornaNomeLeitor(origem));
+                        break;
+                    }
+                    fprintf(saidas_f, "Erro: Livro com ID %d não encontrado\n", id_livro);
+                    break;
+                }
                 // Origem e destino sao trocados segundo a documentacao
-                recusaRecomendacaoListaLeitores(leitores, livro, id_destino, id_origem);
-                fprintf(saidas_f, "%s rejeita recomendação \"%s\" de %s\n", retornaNomeLeitor(leitor1), retornaNomeLivro(livro), retornaNomeLeitor(leitor2));
+                recusaRecomendacaoListaLeitores(leitores, livro, id_destino, id_origem, saidas_f);
                 break;
             }
             case 6: // Descobrir livro em comum entre Leitores
@@ -86,11 +131,18 @@ int main(void)
                 criaAfinidadesEntreLeitores(leitores);
                 tLeitor *leitor1 = retornaLeitorListaLeitores(leitores, id_origem);
                 tLeitor *leitor2 = retornaLeitorListaLeitores(leitores, id_destino);
-                if(existeAfinidadeLeitores(leitor1, leitor2)){
-                    fprintf(saidas_f, "Existe afinidade entre %s e %s\n", retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor2));
-                }else{
-                    fprintf(saidas_f, "Não existe afinidade entre %s e %s\n", retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor2));
+                if(leitor1 && leitor2)
+                {
+                    if(existeAfinidadeLeitores(leitor1, leitor2)){
+                        fprintf(saidas_f, "Existe afinidade entre %s e %s\n", retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor2));
+                    }else{
+                        fprintf(saidas_f, "Não existe afinidade entre %s e %s\n", retornaNomeLeitor(leitor1), retornaNomeLeitor(leitor2));
+                    }
                 }
+                if(!leitor1)
+                    fprintf(saidas_f, "Erro: Leitor com ID %d não encontrado\n", id_origem);
+                if(!leitor2)
+                    fprintf(saidas_f, "Erro: Leitor com ID %d não encontrado\n", id_destino);
                 break;
             }
             case 8: // Imprime BookED
@@ -100,7 +152,7 @@ int main(void)
                 break;
             }
             default:
-                fprintf(saidas_f, "ERRO! Funcionalidade desconhecida: %d\n", funcionalidade);
+                fprintf(saidas_f, "Erro: Comando %d não reconhecido\n", funcionalidade);
                 break;
         }
     }

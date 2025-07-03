@@ -2,7 +2,6 @@ CASOS_DIR = ../Casos de teste
 
 all:
 	gcc *.c -o test
-	./test
 
 prog:
 	gcc *.c -o test -g

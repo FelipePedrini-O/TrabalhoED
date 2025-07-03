@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+    Varios hotfixes foram feitos nas funcoes para evitar erros de segfault
+*/
+
 typedef struct livro tLivro;
 
 tLivro* criaLivro(char* titulo, char* autor, char* genero, int ano_publicacao, int id);
