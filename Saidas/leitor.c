@@ -145,8 +145,8 @@ void liberaLeitor(void* leitor){
         free(l->nome);
         liberaLista(l->gostos);
 
+        liberaLeitoresDaListaAfinidadesLeitores(l->afinidades);
         liberaListaLivro(l->recomendacoes);
-        //liberaListaLeitores(l->afinidades);       // Comentado para evitar double free
         liberaListaLivro(l->desejados);
         liberaListaLivro(l->lidos);
         

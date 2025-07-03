@@ -8,6 +8,10 @@ prog:
 	touch teste_saida.txt
 	./test > teste_saida.txt
 
+valgrind:
+	gcc -g *.c
+	valgrind --leak-check=full ./a.out
+
 clean:
 	rm -f test
 

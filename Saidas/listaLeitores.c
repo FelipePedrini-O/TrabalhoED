@@ -290,19 +290,21 @@ void imprimeNomesListaLeitores(tListaLeitores* l, FILE* saidas_f){
     }
 }
 
-/* void liberaLeitoresDaListaLeitores(tListaLeitores *l)
+// Funcao de uso uncico e exclusivo para a liberacao das afinidades
+void liberaLeitoresDaListaAfinidadesLeitores(tListaLeitores *l)
 {
     if(l)
     {
         tNode *temp = l->prim;
         while(temp)
         {
-            tNode *aux = temp;       // Funcao a ser obervada por alteracao na libera principal
+            tNode *aux = temp;
             temp = temp->prox;
-            liberaLeitor(aux->leitor);
+            free(aux); // Libera apenas o no e nao o leitor para evitar double free de afinidades
         }
+        free(l);
     }
-} */
+}
 
 // Funcao alterada para evitar duplicatas na lista de afinidades
 static void insereAfinidadeEntreLeitores(tListaLeitores* l, tLeitor* target){

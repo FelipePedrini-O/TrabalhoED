@@ -24,7 +24,7 @@ int descobreLivrosComumListaLeitores(tListaLeitores *l, int id_origem, int id_de
 
 void imprimeNomesListaLeitores(tListaLeitores* l, FILE* saidas_f);
 
-// void liberaLeitoresDaListaLeitores(tListaLeitores *l); Funcao a ser obervada por alteracao na libera principal
+void liberaLeitoresDaListaAfinidadesLeitores(tListaLeitores *l);
 
 void criaAfinidadesEntreLeitores(tListaLeitores* l);
 //Fim das Funcoes (2)
